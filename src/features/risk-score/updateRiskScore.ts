@@ -6,8 +6,8 @@ export async function updateStudentRiskScore(studentId: string) {
     where: { studentId }
   });
 
-  const formattedVisits = visits.map(v => ({
-    date: v.createdAt,
+  const formattedVisits = visits.map((v: any) => ({
+    createdAt: v.createdAt,
     symptoms: v.symptoms as any
   }));
 

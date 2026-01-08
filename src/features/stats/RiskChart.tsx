@@ -17,7 +17,7 @@ export function RiskChart() {
   return (
     <PieChart width={300} height={300}>
       <Pie data={data} dataKey="value" nameKey="name">
-        {data.map((_, i) => (
+        {data.map((_: any, i: number) => (
           <Cell key={i} fill={COLORS[i]} />
         ))}
       </Pie>

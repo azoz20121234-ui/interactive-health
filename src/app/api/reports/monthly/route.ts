@@ -6,7 +6,7 @@ export async function GET() {
     include: { student: true }
   });
 
-  const report = visits.map(v => ({
+  const report = visits.map((v: any) => ({
     student: v.student.name,
     date: v.createdAt,
     symptoms: v.symptoms

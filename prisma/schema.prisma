@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      Role     @default(NURSE)
+  
+  createdAt DateTime @default(now())
+}
+
+model Student {
+  id        String   @id @default(uuid())
+  name      String
+  grade     String
+  visits    ClinicVisit[]
+  riskScore HealthRiskScore?
+
+  createdAt DateTime @default(now())
+}
+
+model ClinicVisit {
+  id        String   @id @default(uuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  symptoms  Json
+  createdAt DateTime @default(now())
+}
+
+model HealthRiskScore {
+  id        String   @id @default(uuid())
+  studentId String   @unique
+  student   Student  @relation(fields: [studentId], references: [id])
+
+  score     Int
+  level     RiskLevel
+  updatedAt DateTime @updatedAt
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum Role {
+  ADMIN
+  NURSE
+  DOCTOR
+}
